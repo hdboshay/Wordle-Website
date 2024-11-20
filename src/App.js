@@ -1,26 +1,20 @@
-import logo from './logo.svg';
 import HomeScreen from './components/home-screen';
+import GameScreen from './components/game-screen';
 import './styles/App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-
-      <HomeScreen/>
+      <h1>
+        Wordle Game
+      </h1>
+      <div style={{"display":'none'}}>
+        <HomeScreen/>
+      </div>
+      
+      <div style={{"display":'block'}}>
+        <GameScreen/>
+      </div>
     </div>
   );
 }
