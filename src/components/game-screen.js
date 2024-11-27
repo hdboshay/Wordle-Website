@@ -1,43 +1,57 @@
-import { Row, Col } from "antd";
-import { React, useState } from 'react';
-import { Input, Button } from 'antd';
+import { useState } from 'react';
+import { Button } from "antd";
 import '../styles/game-screen.css';
+import AttemptRow from "./attempt-row";
 
-function GameScreen({ answer, totalGuesses }) {
+function GameScreen({ answer, totalGuesses, currentGuess, defineCurrentGuess }) {
 
     const answerLength = answer.length
+    const [revealAnswer, setRevealAnswer] = useState(false)
+    const [inputGuess, setInputGuess] = useState("")
+    const guessRows = []
+
+    for (let i = 0; i < totalGuesses; i++) {
+        guessRows.push(
+            <li className="attempt-row" key={i}>
+                <AttemptRow answerLength={answerLength} defineInputGuess={setInputGuess} isActiveGuess={currentGuess === i}/>
+            </li>
+        );
+    }
+
+
+    const onClick = () => {
+        if (currentGuess + 1 < totalGuesses) {
+            if (inputGuess === answer) {
+                defineCurrentGuess(-1)
+                console.log("correct answer")
+            }
+            else{
+                setInputGuess("")
+                defineCurrentGuess(currentGuess + 1)
+            }
+        }
+        else {
+            defineCurrentGuess(-1)
+            setRevealAnswer(true)
+        }
+        
+    };
+
+
 
 
     return (
         <div className="game-screen">
-            <p>
-                remove debug text for guesses and answer before finishing!!!! {answer} {totalGuesses} {answerLength}
-            </p>
+            {revealAnswer && <p>The answer was '{answer}'</p>}
 
-            <div className="layout-row">
-                <Row gutter={[8, 8]}>
-                    <Col span={16} offset={4}>
-                        <div className="letter-input">
-                            <Input maxLength={1} defaultValue={""} onChange={(e) => console.log(e.target.value)}/>
-                        </div>
-                        <div className="letter-input">
-                            <Input maxLength={1} defaultValue={""} onChange={(e) => console.log(e.target.value)}/>
-                        </div>
-                        <div className="letter-input">
-                            <Input maxLength={1} defaultValue={""} onChange={(e) => console.log(e.target.value)}/>
-                        </div>
-                        <div className="letter-input">
-                            <Input maxLength={1} defaultValue={""} onChange={(e) => console.log(e.target.value)}/>
-                        </div>
-                        <div className="letter-input">
-                            <Input maxLength={1} defaultValue={""} onChange={(e) => console.log(e.target.value)}/>
-                        </div>
-                        <div className="letter-input">
-                            <Input maxLength={1} defaultValue={""} onChange={(e) => console.log(e.target.value)}/>
-                        </div>
-                    </Col>
-                </Row>
-            </div>
+            <ul>
+                {guessRows}
+            </ul>
+
+
+            <Button id="submit-answer" type="primary" disabled={currentGuess === -1} onClick={onClick}>Submit Guess</Button>
+            <Button danger id="reset-game" type="primary" href='index.html'>Reset Game</Button>
+
         </div>
     );
 }

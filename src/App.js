@@ -12,19 +12,20 @@ function App() {
 
   const [totalGuesses, setTotalGuesses] = useState(defaults.num_guesses)
   const [answer, setAnswer] = useState("")
-
+  const [currentGuess, setCurrentGuess] = useState(-1)
+  const [isGameActive, setIsGameActive] = useState(false)
 
   return (
     <div className="App">
       <h1>
         Wordle Game
       </h1>
-      <div style={{"display":'block'}}>
-        <HomeScreen defineAnswer={setAnswer} defineTotalGuesses={setTotalGuesses} defaults={defaults} />
+      <div style={{"display":((isGameActive) ? "none" : "block")}}>
+        <HomeScreen defineAnswer={setAnswer} defineTotalGuesses={setTotalGuesses} defaults={defaults} defineCurrentGuess={setCurrentGuess} defineIsGameActive={setIsGameActive} />
       </div>
       
-      <div style={{"display":'block'}}>
-        <GameScreen answer={answer} totalGuesses={totalGuesses}/>
+      <div style={{"display":((isGameActive) ? "block" : "none")}}>
+        <GameScreen answer={answer} totalGuesses={totalGuesses} currentGuess={currentGuess} defineCurrentGuess={setCurrentGuess}/>
       </div>
     </div>
   );
