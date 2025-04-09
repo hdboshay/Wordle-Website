@@ -51,7 +51,7 @@ function GameScreen({ answer, totalGuesses, currentGuess, defineCurrentGuess }) 
             let letterIndex = i
 
             if (letter === answer[letterIndex]) {
-                rowColours[i] = "#bae367"
+                rowColours[i] = "#42d428"
                 checkedIndex.push(i)
             }
         }
@@ -78,7 +78,7 @@ function GameScreen({ answer, totalGuesses, currentGuess, defineCurrentGuess }) 
             }
 
             if (guessLetterCount <= answerLetterCount && !checkedIndex.includes(i)) {
-                rowColours[i] = "#ffec3d"
+                rowColours[i] = "#d49d1e"
             }
         }
 
